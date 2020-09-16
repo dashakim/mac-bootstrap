@@ -1,0 +1,29 @@
+# Compiled source #
+###################
+[Oo]bj/
+[Bb]in/
+ClientBin/
+[Dd]ebug*/
+[Rr]elease*/
+
+
+# Tools #
+###################
+*.suo
+*.user
+*.ReSharper
+.svn
+
+
+# Office Temp Files #
+###################
+~$*
+*.tmp
+
+
+# OS generated files #
+######################
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db

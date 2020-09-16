@@ -1,0 +1,148 @@
+# [user]
+# 	name = PUT_YOUR_USER_HERE
+# 	email = PUT_YOUR_USER_HERE@users.noreply.github.com
+
+[core]
+	excludesfile = ~/.gitignore_global
+	editor = code --wait
+	pager=less -x4
+	# autocrlf = true
+	# safecrlf = false
+	whitespace = cr-at-eol
+	trustctime = false
+	filemode = false
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+	ui = true
+
+[color "branch"]
+    current = red reverse
+	local = blue
+	remote = green
+
+[color "diff"]
+    meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[color "status"]
+    added = yellow
+	changed = green
+	untracked = cyan
+
+[push]
+	default = upstream
+	
+[pull]
+    default = current
+
+[diff]
+	memonicprefix = true
+  
+[branch]
+  autosetuprebase = always
+
+[apply]
+  whitespace = nowarn
+	
+[alias]
+	mergelog = log --merges --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	lg = "!git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --first-parent \"$(git symbolic-ref --short HEAD)\""
+    st = status -s
+    cl = clone
+    ci = "!git add -A ; git commit"
+    cm = "!git add -A ; git commit -m"
+    cma = "!git add -A ; git commit -a -m"
+    ca = "!git add -A ; git commit --amend"
+    amend = commit --amend
+    caa = commit -a --amend -C HEAD
+    filelog = log -u
+    fl = log -u
+    ai = add --interactive
+    co = checkout
+    br = branch 
+	
+    #"!git branch -ra | grep -v done"
+    bra = branch -ra
+    
+	#list commands
+    le = log --oneline --decorate
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    ls1 = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+    lds = log --pretty=format:"%C(yellow)%h\\ %C(green)%ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --graph
+    ls = log --pretty=format:"%C(green)%h\\ %C(yellow)[%ad]%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+    lc  = "!f() { git ll "$1"^.."$1"; }; f"
+    lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
+    
+	#list all aliases
+    la = "!git config -l | grep alias | cut -c 7-"
+    diff = diff --word-diff
+    d = diff --word-diff
+    dc = diff --cached
+    
+	#list modified files in last commit
+    dl = "!git ll -1"
+    
+	#diff last commit
+    dlc = diff --cached HEAD^
+    dr  = "!f() { git diff "$1"^.."$1"; }; f"
+    diffr  = "!f() { git diff "$1"^.."$1"; }; f"
+    branch = branch -ra
+
+    #reset commands
+    r = reset
+    r1 = reset HEAD^
+    r2 = reset HEAD^^
+    rh = reset --hard
+    rh1 = reset HEAD^ --hard
+    rh2 = reset HEAD^^ --hard
+
+    #stash
+    sl = stash list
+    sa = stash apply
+    ss = stash save
+
+    cp = cherry-pick
+    grep = grep -Ii
+    gr = grep -Ii
+	
+    #grep from root folder
+    gra = "!f() { A=$(pwd) && TOPLEVEL=$(git rev-parse --show-toplevel) && cd $TOPLEVEL && git grep --full-name -In $1 | xargs -I{} echo $TOPLEVEL/{} && cd $A; }; f"
+
+    #grep on filename
+    f = "!git ls-files | grep -i"
+
+    #rename branch tree to done-
+    done = "!f() { git branch | grep "$1" | cut -c 3- | grep -v done | xargs -I{} git branch -m {} done-{}; }; f"
+
+    #assume aliases
+    assume = update-index --assume-unchanged
+    unassume = update-index --no-assume-unchanged
+    
+	#show assumed files
+    assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+    
+	#unassume all the assumed files
+    unassumeall = "!git assumed | xargs git update-index --no-assume-unchanged"
+    assumeall = "!git st -s | awk {'print $2'} | xargs git assume"
+
+    lasttag = describe --tags --abbrev=0
+    lt = describe --tags --abbrev=0
+
+    #merges
+    ours = "!f() { git co --ours $@ && git add $@; }; f"
+    theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+
+    #list remotes
+    rem="!git config -l | grep remote.*url | tail -n +2"
+
+    #apply patch from other local repo
+    lap = "!f() { git --git-dir=$1.git format-patch -k -1 --stdout $2 | git am -3 -k; }; f"
+	dh = diff --color-words HEAD~1
+	unstage = reset HEAD --
+
+[status]
+	submoduleSummary = true
